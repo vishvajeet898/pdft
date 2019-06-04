@@ -3,7 +3,7 @@ package pdft
 import (
 	"bytes"
 
-	"github.com/signintech/pdft/minigopdf"
+	"github.com/plutov/pdft/minigopdf"
 )
 
 //ContentText text in pdf
@@ -39,9 +39,9 @@ func (c *ContentText) toSteram() (*bytes.Buffer, error) {
 	}
 
 	var rgb gopdf.Rgb
-	rgb.SetR(1)
-	rgb.SetG(1)
-	rgb.SetB(1)
+	rgb.SetR(255)
+	rgb.SetG(255)
+	rgb.SetB(255)
 
 	var cc gopdf.CacheContent
 	cc.Setup(

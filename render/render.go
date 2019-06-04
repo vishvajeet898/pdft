@@ -3,7 +3,7 @@ package render
 import (
 	"log"
 
-	"github.com/signintech/pdft"
+	"github.com/plutov/pdft"
 )
 
 //ErrNotFoundKey key not found

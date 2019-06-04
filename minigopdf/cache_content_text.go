@@ -128,7 +128,7 @@ func (c *cacheContentText) toStream(protection *PDFProtection) (*bytes.Buffer, e
 
 	stream.WriteString("BT\n")
 	stream.WriteString(fmt.Sprintf("%0.2f %0.2f TD\n", x, y))
-	stream.WriteString("/F" + strconv.Itoa(c.fontCountIndex) + " " + strconv.Itoa(c.fontSize) + " Tf\n")
+	stream.WriteString("/TT" + strconv.Itoa(c.fontCountIndex) + " " + strconv.Itoa(c.fontSize) + " Tf\n")
 	if r+g+b != 0 {
 		rFloat := float64(r) * 0.00392156862745
 		gFloat := float64(g) * 0.00392156862745
