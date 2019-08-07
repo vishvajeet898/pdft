@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -319,23 +318,19 @@ func (i *PDFt) SetFont(name string, style string, size int) error {
 	return nil
 }
 
-//Save save output pdf
+// Save saves output to pdf file
 func (i *PDFt) Save(filepath string) error {
-	var buff bytes.Buffer
-	err := i.SaveTo(&buff)
+	f, err := os.OpenFile(filepath, os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath, buff.Bytes(), 0644)
-	if err != nil {
-		return err
-	}
-	return nil
+
+	err = i.SaveTo(f)
+	return err
 }
 
-//SaveTo save pdf to io.Writer
+// SaveTo save pdf to io.Writer
 func (i *PDFt) SaveTo(w io.Writer) error {
-
 	newpdf, lastID, err := i.build()
 	if err != nil {
 		return err
@@ -346,14 +341,10 @@ func (i *PDFt) SaveTo(w io.Writer) error {
 		return err
 	}
 	_, err = buff.WriteTo(w)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func (i *PDFt) build() (*PDFData, int, error) {
-
 	var err error
 	nextID := i.pdf.maxID()
 	for _, fontData := range i.fontDatas {
