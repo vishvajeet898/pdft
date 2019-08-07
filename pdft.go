@@ -320,10 +320,12 @@ func (i *PDFt) SetFont(name string, style string, size int) error {
 
 // Save saves output to pdf file
 func (i *PDFt) Save(filepath string) error {
-	f, err := os.OpenFile(filepath, os.O_CREATE|os.O_APPEND, 0644)
+	f, err := os.OpenFile(filepath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
+
+	defer f.Close()
 
 	err = i.SaveTo(f)
 	return err
@@ -340,6 +342,7 @@ func (i *PDFt) SaveTo(w io.Writer) error {
 	if err != nil {
 		return err
 	}
+
 	_, err = buff.WriteTo(w)
 	return err
 }
