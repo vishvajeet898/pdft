@@ -42,8 +42,6 @@ func buildImgProp(imginfo imgInfo) (*bytes.Buffer, error) {
 		max := len(imginfo.trns)
 		var trns bytes.Buffer
 		for j < max {
-			//trn := int(imginfo.trns[j])
-			//trns.WriteByte(imginfo.trns[j])
 			trns.WriteString(fmt.Sprintf("%d", imginfo.trns[j]))
 			trns.WriteString(" ")
 			trns.WriteString(fmt.Sprintf("%d", imginfo.trns[j]))

@@ -134,7 +134,6 @@ func (p *PDFData) injectImgsToPDF(pdfImgs []*PDFImageData) error {
 	}
 
 	var cw crawl
-	//cw.set(p, p.trailer.rootObjID, "Pages", "Kids", "Resources", "XObject")
 	cw.set(p, rootOfXObjectID, "XObject")
 	err = cw.run()
 	if err != nil {
@@ -280,8 +279,7 @@ func (p *PDFData) injectFontsToPDF(fontDatas map[string]*PDFFontData) error {
 	}
 
 	objMustReplaces := make(map[int]string)
-	//หา obj ที่ต้องยัด font ใหม่ลงไป
-	for objID, r := range cw.results { //วน แต่ละ ojb
+	for objID, r := range cw.results {
 		fontPropVal, err := r.valOf("Font")
 		if err == ErrCrawlResultValOfNotFound {
 			continue
@@ -368,7 +366,6 @@ func (p *PDFData) injectContentToPDF(contenters *[]Contenter) error {
 		}
 
 		pageObjIDs, _, err = readObjIDFromDictionaryArr(propKidsVal)
-		//	fmt.Printf("pageObjIDs = %#v\n%s\\n\n", pageObjIDs, propKidsVal)
 		if err != nil {
 			return err
 		}
@@ -379,7 +376,6 @@ func (p *PDFData) injectContentToPDF(contenters *[]Contenter) error {
 	for pageIndex, pageObjID := range pageObjIDs {
 
 		var cw2Content crawl
-		//fmt.Printf("cw2Content.set = %d\n\n", pageObjID)
 		cw2Content.set(p, pageObjID, "Contents")
 		err = cw2Content.run()
 		if err != nil {
@@ -387,21 +383,13 @@ func (p *PDFData) injectContentToPDF(contenters *[]Contenter) error {
 		}
 
 		for _, r := range cw2Content.results {
-
-			//fmt.Printf("%s\n\n", r.String())
-
 			var propContentsVal string
-			//fmt.Printf("id=%d\n", id)
 			propContentsVal, err = r.valOf("Contents")
-			//fmt.Printf("%d propContentsVal=%s\n\n", id, propContentsVal)
 			if err == ErrCrawlResultValOfNotFound {
 				continue
 			}
 
 			propContentsValType := propertyType(propContentsVal)
-			/*if propContentsValType != dictionary {
-				return errors.New("not support /Contents type not dictionary yet")
-			}*/
 			var contentsObjID int
 			if propContentsValType == dictionary {
 				contentsObjID, _, err = readObjIDFromDictionary(propContentsVal)
@@ -429,7 +417,6 @@ func (p *PDFData) injectContentToPDF(contenters *[]Contenter) error {
 			}
 
 			var stm *bytes.Buffer
-			//fmt.Printf("\n-------------------%d-----------------------\n%s\n\n", contentsObjID, string(*data))
 			stmLen, err := streamLength(p, data)
 			if err != nil {
 				return err
@@ -439,8 +426,6 @@ func (p *PDFData) injectContentToPDF(contenters *[]Contenter) error {
 			if err != nil {
 				return err
 			}
-			//fmt.Printf("stm=%s\n\n", stm.String())
-
 			if _, ok := pageBuffs[pageIndex+1]; ok {
 				stm.WriteString("\n")
 				pageBuffs[pageIndex+1].WriteTo(stm)
@@ -451,10 +436,7 @@ func (p *PDFData) injectContentToPDF(contenters *[]Contenter) error {
 	}
 
 	for objID := range objMustReplaces {
-		//_ = objID
-		//fmt.Printf("objID=%d\n", objID)
 		p.getObjByID(objID).data = []byte("" + objMustReplaces[objID] + "")
-		//fmt.Printf("objId=%d %s\n", objID, string(p.getObjByID(objID).data))
 	}
 
 	return nil
@@ -538,7 +520,6 @@ func findMaxFontIndex(cw *crawl, p *PDFData) (int, error) {
 			if err != nil {
 				return 0, err
 			}
-			//fmt.Printf("%#v\n", crFonts)
 		} else if fontPropValType == dictionary {
 			var fontObjID int
 			fontObjID, _, err = readObjIDFromDictionary(fontPropVal)
@@ -550,7 +531,6 @@ func findMaxFontIndex(cw *crawl, p *PDFData) (int, error) {
 			if err != nil {
 				return 0, err
 			}
-			//fmt.Printf("%#v\n", crFonts)
 		} else {
 			return 0, errors.New("not support /Font type array yet")
 		}

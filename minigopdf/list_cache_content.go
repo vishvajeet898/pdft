@@ -76,13 +76,3 @@ func (l *listCacheContent) toStream(protection *PDFProtection) (*bytes.Buffer, e
 	}
 	return &buff, nil
 }
-
-/*
-func (l *listCacheContent) debug() string {
-	var buff bytes.Buffer
-	for _, cache := range l.caches {
-		buff.WriteString(cache.text.String())
-		buff.WriteString("\n")
-	}
-	return buff.String()
-}*/

@@ -7,6 +7,8 @@ import (
 )
 
 func TestRender(t *testing.T) {
+	pdft.FontKeyword = "F"
+
 	var fis FieldInfos
 	fis = append(fis, FieldInfo{
 		PageNum: 1,

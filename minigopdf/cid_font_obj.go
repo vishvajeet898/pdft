@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// CIDFontObj .
 type CIDFontObj struct {
 	buffer                    bytes.Buffer
 	PtrToSubsetFontObj        *SubsetFontObj
@@ -48,7 +49,6 @@ func (ci *CIDFontObj) getType() string {
 }
 
 func (ci *CIDFontObj) getObjBuff() *bytes.Buffer {
-	//fmt.Printf("%s\n", me.buffer.String())
 	return &ci.buffer
 }
 

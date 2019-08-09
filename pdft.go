@@ -18,6 +18,9 @@ var ErrAddSameFontName = errors.New("add same font name")
 //ErrFontNameNotFound font name not found
 var ErrFontNameNotFound = errors.New("font name not found")
 
+// FontKeyword has TT as default value, can be set to F if PDF file has different font keyword
+var FontKeyword = "TT"
+
 //Left left
 const Left = gopdf.Left //001000
 //Top top
@@ -73,6 +76,8 @@ func (i *PDFt) ShowCellBorder(isShow bool) {
 
 //Open open pdf file
 func (i *PDFt) Open(filepath string) error {
+	gopdf.FontKeyword = FontKeyword
+
 	f, err := os.Open(filepath)
 	if err != nil {
 		return err

@@ -57,12 +57,14 @@ func propertyType(raw string) string {
 	raw = strings.TrimSpace(raw)
 	if len(raw) > len("<<") && raw[0:len("<<")] == "<<" {
 		return object
-	} else if len(raw) > len("[") && raw[0:len("[")] == "[" {
+	}
+	if len(raw) > len("[") && raw[0:len("[")] == "[" {
 		return array
-	} else if _, err := strconv.Atoi(strings.TrimSpace(raw)); err == nil {
+	}
+	if _, err := strconv.Atoi(strings.TrimSpace(raw)); err == nil {
 		return number
 	}
-	//fmt.Printf("raw=%s\n", raw)
+
 	return dictionary
 }
 
@@ -76,7 +78,6 @@ func readProperty(rawObj *[]byte, key string) (*PDFObjPropertyData, error) {
 }
 
 func readProperties(rawObj *[]byte, outProps *PDFObjPropertiesData) error {
-
 	tmp0 := *rawObj
 	index := bytes.Index(*rawObj, extractStreamBytes)
 	if index != -1 { //เป็น stream
@@ -88,8 +89,6 @@ func readProperties(rawObj *[]byte, outProps *PDFObjPropertiesData) error {
 	if startObjInx > endObjInx {
 		return errors.New("bad obj properties")
 	}
-
-	//fmt.Printf("\n\n%s\n\n%d\n", string(*rawObj), endObjInx)
 
 	var regexpSlash = regexp.MustCompile("[\\n\\t ]+\\/")
 	var regexpOpenB = regexp.MustCompile("[\\n\\t ]+\\[")

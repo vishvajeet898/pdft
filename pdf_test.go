@@ -23,6 +23,8 @@ func TestPDF(t *testing.T) {
 }
 
 func pdf(t *testing.T, filename string) {
+	gopdf.FontKeyword = "F"
+
 	fmt.Printf("\n\n\n####Open %s ####\n\n", filename)
 	var ipdf PDFt
 	//err := ipdf.Open("test/pdf/pdf_from_docx_with_f.pdf")
@@ -62,12 +64,3 @@ func pdf(t *testing.T, filename string) {
 		return
 	}
 }
-
-/*
-func TestSlice(t *testing.T) {
-	src := []byte("ABCDEFGHIJ")
-	dest := src[9:10]
-	fmt.Printf("src=%d dest=%d\n", cap(src), cap(dest))
-	dest = append(dest, []byte("1234567890123456789012345678901")...)
-	fmt.Println(string(src))
-}*/

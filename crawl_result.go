@@ -33,7 +33,6 @@ func (c *crawlResult) add(key string, val string) error {
 	item.key = key
 	item.valStr = val
 	item.typeOfVal = typeOfValStr
-	//fmt.Printf("key===%s\n", key)
 	c.items = append(c.items, item)
 	return nil
 }

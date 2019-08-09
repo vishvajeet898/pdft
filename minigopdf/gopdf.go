@@ -13,6 +13,9 @@ import (
 	"time"
 )
 
+// FontKeyword has TT as default value, can be set to F if PDF file has different font keyword
+var FontKeyword = "TT"
+
 const subsetFont = "SubsetFont"
 
 //GoPdf : A simple library for generating PDF written in Go lang
@@ -551,7 +554,7 @@ func (gp *GoPdf) AddTTFFontByReaderWithOption(family string, rd io.Reader, optio
 	if gp.indexOfProcSet != -1 {
 		procset := gp.pdfObjs[gp.indexOfProcSet].(*ProcSetObj)
 		if !procset.Realtes.IsContainsFamilyAndStyle(family, option.Style&^Underline) {
-			procset.Realtes = append(procset.Realtes, RelateFont{Family: family, IndexOfObj: index, CountOfFont: gp.curr.CountOfFont, Style: option.Style&^Underline})
+			procset.Realtes = append(procset.Realtes, RelateFont{Family: family, IndexOfObj: index, CountOfFont: gp.curr.CountOfFont, Style: option.Style &^ Underline})
 			subsetFont.CountOfFont = gp.curr.CountOfFont
 			gp.curr.CountOfFont++
 		}

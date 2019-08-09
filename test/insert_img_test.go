@@ -12,6 +12,10 @@ import (
 	"github.com/plutov/pdft"
 )
 
+func init() {
+	pdft.FontKeyword = "F"
+}
+
 func TestInsertToDocx(t *testing.T) {
 
 	if err := initTest(); err != nil {

@@ -18,7 +18,7 @@ func (c *crawlResultFonts) parse(propVal *[]byte) error {
 
 	for _, prop := range props {
 		var crFont crawlResultFont
-		fontIndex, err := strconv.Atoi(strings.TrimSpace(strings.Replace(prop.key, "TT", "", -1)))
+		fontIndex, err := strconv.Atoi(strings.TrimSpace(strings.Replace(prop.key, FontKeyword, "", -1)))
 		if err != nil {
 			return err
 		}
@@ -36,7 +36,7 @@ func (c *crawlResultFonts) parse(propVal *[]byte) error {
 func (c *crawlResultFonts) String() string {
 	var buff bytes.Buffer
 	for _, f := range *c {
-		buff.WriteString(fmt.Sprintf("/TT%d %d 0 R\n", f.fontIndex, f.fontObjID))
+		buff.WriteString(fmt.Sprintf("/%s%d %d 0 R\n", FontKeyword, f.fontIndex, f.fontObjID))
 	}
 	return buff.String()
 }

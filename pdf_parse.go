@@ -118,7 +118,6 @@ func parseXref(raw *[]byte, pdf *PDFData) error {
 func parseObjOnlyKeywordN(raw *[]byte, pdf *PDFData) error {
 
 	for _, xref := range pdf.xrefs {
-		//fmt.Printf("%d\n", i)
 		if xref.Keyword == "n" {
 			var pdfobj PDFObjData
 			err := pdfobj.parse(raw, xref.N10Digit)
